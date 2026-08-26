@@ -1,21 +1,46 @@
-import sys
+WATER_PER_KG = 30
 
-# Сохраняем оригинальный поток вывода
-original_stdout = sys.stdout
+print("Здравствуйте")
 
-# Открываем файл для записи
-log_file = open("заказы.log", "w", encoding="utf-8")
+user_name = input("Как вас зовут? ")
 
-# Перенаправляем вывод в файл
-sys.stdout = log_file
+while True:
+    try:
+        user_age = int(input("Сколько вам лет? "))
+        if not (0 < user_age < 120):
+            print("Пожалуйста, укажите реальный возраст от 1 до 119 лет.")
+            continue
+        break
+    except ValueError:
+        print("Ошибка! Нужно ввести целое число (например, 25).")
 
-# Теперь все print() будут писать в файл, а не на экран
-print("Заказ № 1: Пицца, 500 руб.")
-print("Заказ № 2: Суши, 800 руб.")
-print("Заказ № 3: Бургер, 350 руб.")
+while True:
+    try:
+        user_weight = float(input("Введите ваш вес в кг (например, 70.5): "))
+        if not (30 <= user_weight <= 300):
+            print("Кажется, вес указан неверно. Проверьте данные и попробуйте снова.")
+            continue
+        break
+    except ValueError:
+        print("Ошибка! Нужно ввести число, можно с точкой (например, 80.3).")
 
-# Возвращаем вывод обратно на экран
-sys.stdout = original_stdout
-log_file.close()
+while True:
+    try:
+        user_height = float(input("Введите ваш рост в метрах (например, 1.75): "))
+        if not (1.0 <= user_height <= 2.5):
+            print("Рост должен быть в диапазоне от 1.0 до 2.5 метров. Проверьте ввод.")
+            continue
+        break
+    except ValueError:
+        print("Ошибка! Нужно ввести число (например, 1.80).")
 
-print("Лог заказов сохранён в файл!")  # Это уже на экран
+bmi = user_weight / (user_height ** 2)
+bmi_rounded = round(bmi, 1)
+
+water_ml = user_weight * WATER_PER_KG
+water_liters = round(water_ml / 1000, 1)
+
+print(f"\nОтчёт для пользователя: {user_name}, {user_age} лет.")
+print(f"Твой индекс массы тела: {bmi_rounded} кг/м².")
+print(f"Рекомендуемая норма воды: {water_liters} л. в день.")
+print("Расчёт окончен. Будьте здоровы!")
